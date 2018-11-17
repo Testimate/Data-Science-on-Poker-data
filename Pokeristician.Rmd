@@ -1,0 +1,27 @@
+---
+title: "Pokeristician"
+author: "Yuqing Xue"
+date: "November 16, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readxl)
+library(lubridate)
+```
+
+```{r}
+#filePath <- file.choose()
+filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"
+data <- read_excel(filePath)
+# data %>% select(SessionStart) %>% .[[1]]
+
+Testimate <- data %>% mutate(Profit = WinPromo + cashOut - buyIn, sesLength = as.numeric(sesEnd - sesStart), profitPerHr = Profit/sesLength, accuProfit = cumsum(Profit), accuHour = cumsum(sesLength), accuProfitPerHr = accuProfit/accuHour); Testimate
+
+```
+
