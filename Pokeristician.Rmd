@@ -1,5 +1,5 @@
 ---
-title: "Pokeristician"
+title: "What's my Game?"
 author: "Yuqing Xue"
 date: "November 16, 2018"
 output: html_document
@@ -13,15 +13,21 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
 library(lubridate)
+
+library(highcharter)
 ```
+
+## My Statistical Analysis for My Statistics
+
+### 1. Data Preparation
 
 ```{r}
 #filePath <- file.choose()
 filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"
-data <- read_excel(filePath)
-# data %>% select(SessionStart) %>% .[[1]]
+GoogleSheet <- read_excel(filePath)
 
-Testimate <- data %>% mutate(sesLength = as.numeric(sesEnd - sesStart), # can directly make substraction between times
+Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesStart), sesEnd = ymd_hms(sesEnd),
+                             sesLength = as.numeric(sesEnd - sesStart), #directly make substraction between times
                              Profit = cashOut - buyIn, 
                              profitPerHr = Profit/sesLength,
                              totalProfit = promoBonus + Profit,
@@ -32,8 +38,73 @@ Testimate <- data %>% mutate(sesLength = as.numeric(sesEnd - sesStart), # can di
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour); 
 
-options(tibble.width = Inf)
-Testimate
+#options(tibble.width = Inf)  
+#Testimate
 
+```
+
+ <https://r4ds.had.co.nz/tibbles.html> 10.3.1
+
+
+
+### 2. Apply `htmlwidget` -> `highchater`, inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r)
+
+#### Beginner `highcharter` learning material by [Danton Noriega](https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html) and [Nana Boateng](https://rstudio-pubs-static.s3.amazonaws.com/304105_70f2ad540827454e934117e3d90f6c1a.html)
+
+
+```{r}
+#library(highcharter)
+series = list(
+  list(
+    name = 'Total Profit for One Session',
+    color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
+    data = Testimate %>% select(totalProfit) %>% .[[1]]
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]])
+```
+
+```{r}
+series = list(
+  list(
+    name = 'Accumulate Total Profit (Counting Promo Bonus)',
+    color = '#FFD700', 
+    data = Testimate %>% select(accuTotalProfit) %>% .[[1]]
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]])
+```
+
+
+```{r}
+series = list(
+  list(
+    name = 'Accumulate Profit Per Hour',
+    color = '#EEAD0E',
+    data = Testimate %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
+  ),
+  list(
+    name = 'Accumulate Total Profit Per Hour (Counting Promo Bonus)',
+    color = '#FF7D40',
+    data = Testimate %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]])
+```
+
+
+
+
+'highcharter' seems to be outdated on CRAN. Directly install from github:
+
+```
+library(devtools)
+install_github("jbkunst/highcharter")
 ```
 
