@@ -21,7 +21,19 @@ filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xls
 data <- read_excel(filePath)
 # data %>% select(SessionStart) %>% .[[1]]
 
-Testimate <- data %>% mutate(Profit = WinPromo + cashOut - buyIn, sesLength = as.numeric(sesEnd - sesStart), profitPerHr = Profit/sesLength, accuProfit = cumsum(Profit), accuHour = cumsum(sesLength), accuProfitPerHr = accuProfit/accuHour); Testimate
+Testimate <- data %>% mutate(sesLength = as.numeric(sesEnd - sesStart), # can directly make substraction between times
+                             Profit = cashOut - buyIn, 
+                             profitPerHr = Profit/sesLength,
+                             totalProfit = promoBonus + Profit,
+                             totalProfitPerHr = totalProfit/sesLength, 
+                             accuHour = cumsum(sesLength),
+                             accuProfit = cumsum(Profit), 
+                             accuProfitPerHr = accuProfit/accuHour,
+                             accuTotalProfit = cumsum(totalProfit),
+                             accuTotalProfitPerHr = accuTotalProfit/accuHour); 
+
+options(tibble.width = Inf)
+Testimate
 
 ```
 
