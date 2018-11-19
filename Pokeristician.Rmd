@@ -17,7 +17,7 @@ library(lubridate)
 library(highcharter)
 ```
 
-## My Statistical Analysis for My Statistics
+## My Statistical Analysis for My Poker Statistics
 
 ### 1. Data Preparation
 
@@ -47,9 +47,13 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 
 
 
-### 2. Apply `htmlwidget` -> `highchater`, inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r)
+### 2. Apply `htmlwidget` -> `highchater`
 
-#### Beginner `highcharter` learning material by [Danton Noriega](https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html) and [Nana Boateng](https://rstudio-pubs-static.s3.amazonaws.com/304105_70f2ad540827454e934117e3d90f6c1a.html)
+#### Initially inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r)
+
+#### Pacakge Author Joshua Kunst's RPub <https://rpubs.com/jbkunst/highcharter>
+
+#### Additional `highcharter` learning material by [Danton Noriega](https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html) and [Nana Boateng](https://rstudio-pubs-static.s3.amazonaws.com/304105_70f2ad540827454e934117e3d90f6c1a.html)
 
 
 ```{r}
@@ -63,7 +67,20 @@ series = list(
 )
 
 highchart() %>%
-  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]])
+  hc_add_series_list(series) %>% 
+  hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]],
+           plotBands = list(
+             list(from = 2.5, to = 3.5, color = "rgba(68, 170, 213, 0.1)", label = list(text = "card dead, good discipline")),
+             list(from = 3.5, to = 4.5, color = "#FAEBD7"),
+             list(from = 4.5, to = 5.5, color = "rgba(68, 170, 213, 0.1)", label = list(text = "350$ cooler")),
+             list(from = 5.5, to = 6.5, color = "#FAEBD7", label = list(text = "early Nit table")),
+             list(from = 6.5, to = 7.5, color = "rgba(68, 170, 213, 0.1)", label = list(text = "400$ cooler")),
+             list(from = 7.5, to = 8.5, color = "#FAEBD7", label = list(text = "hit 2 outer, gutter"))
+             )) %>%
+  hc_yAxis(plotLines = list(
+             list(value = 0, width = 2, color = "black")
+           ))
+    
 ```
 
 ```{r}
@@ -101,7 +118,7 @@ highchart() %>%
 
 
 
-'highcharter' seems to be outdated on CRAN. Directly install from github:
+`highcharter` seems to be outdated on CRAN. Directly install from github via
 
 ```
 library(devtools)
