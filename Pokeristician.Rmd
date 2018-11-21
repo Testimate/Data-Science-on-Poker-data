@@ -38,8 +38,8 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour); 
 
-#options(tibble.width = Inf)  
-#Testimate
+options(tibble.width = Inf)  
+Testimate
 
 ```
 
@@ -47,7 +47,7 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 
 
 
-### 2. Apply `htmlwidget` -> `highchater`
+### 2. Apply `htmlwidget` -> `highcharter`
 
 #### Initially inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r)
 
@@ -86,7 +86,7 @@ highchart() %>%
 ```{r}
 series = list(
   list(
-    name = 'Accumulate Total Profit (Counting Promo Bonus)',
+    name = 'Cumulative Total Profit (Counting Promo Bonus)',
     color = '#FFD700', 
     data = Testimate %>% select(accuTotalProfit) %>% .[[1]]
   )
@@ -100,12 +100,12 @@ highchart() %>%
 ```{r}
 series = list(
   list(
-    name = 'Accumulate Profit Per Hour',
+    name = 'Cumulative Profit Per Hour',
     color = '#EEAD0E',
     data = Testimate %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
   ),
   list(
-    name = 'Accumulate Total Profit Per Hour (Counting Promo Bonus)',
+    name = 'Cumulative Total Profit Per Hour (Counting Promo Bonus)',
     color = '#FF7D40',
     data = Testimate %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
   )
