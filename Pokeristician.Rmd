@@ -38,8 +38,8 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour); 
 
-options(tibble.width = Inf)  
-Testimate
+#options(tibble.width = Inf)  
+#Testimate
 
 ```
 
@@ -68,14 +68,14 @@ series = list(
 
 highchart() %>%
   hc_add_series_list(series) %>% 
-  hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]],
+  hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]], # or day
            plotBands = list(
-             list(from = 2.5, to = 3.5, color = "rgba(68, 170, 213, 0.1)", label = list(text = "card dead, good discipline")),
+             list(from = 2.5, to = 3.5, color = "rgba(68, 170, 213, 0.1)"), # may be colored by day
              list(from = 3.5, to = 4.5, color = "#FAEBD7"),
-             list(from = 4.5, to = 5.5, color = "rgba(68, 170, 213, 0.1)", label = list(text = "350$ cooler")),
-             list(from = 5.5, to = 6.5, color = "#FAEBD7", label = list(text = "early Nit table")),
-             list(from = 6.5, to = 7.5, color = "rgba(68, 170, 213, 0.1)", label = list(text = "400$ cooler")),
-             list(from = 7.5, to = 8.5, color = "#FAEBD7", label = list(text = "hit 2 outer, gutter"))
+             list(from = 4.5, to = 5.5, color = "rgba(68, 170, 213, 0.1)"),
+             list(from = 5.5, to = 6.5, color = "#FAEBD7"),
+             list(from = 6.5, to = 7.5, color = "rgba(68, 170, 213, 0.1)"),
+             list(from = 7.5, to = 8.5, color = "#FAEBD7")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 2, color = "black")
