@@ -19,6 +19,10 @@ library(highcharter)
 
 ## My Statistical Analysis for My Poker Statistics
 
+ __*Updated by Nov.28 2018*__
+ 
+__Testimate:  Deeper Analysis Idea!!! record stack size every half hour, plot specific ZouShi line within a single session! Attempt to test the hypothesis of 1. Do I Tilt? 2.Late night loose? 3. Player pool correlates with time __
+
 ### 1. Data Preparation
 
 ```{r}
@@ -39,7 +43,7 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfitPerHr = accuTotalProfit/accuHour); 
 
 #options(tibble.width = Inf)  
-#Testimate
+Testimate
 
 ```
 
@@ -68,7 +72,7 @@ series = list(
 
 highchart() %>%
   hc_add_series_list(series) %>% 
-  hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]], # or day
+  hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]], # or day
            plotBands = list(
              list(from = 2.5, to = 3.5, color = "rgba(68, 170, 213, 0.1)"), # may be colored by day
              list(from = 3.5, to = 4.5, color = "#FAEBD7"),
@@ -93,7 +97,7 @@ series = list(
 )
 
 highchart() %>%
-  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]])
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]])
 ```
 
 
@@ -112,7 +116,7 @@ series = list(
 )
 
 highchart() %>%
-  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Date) %>% .[[1]])
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]])
 ```
 
 
