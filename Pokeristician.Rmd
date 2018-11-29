@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue"
-date: "November 16, 2018"
+#date: "November 16, 2018"
 output: html_document
 ---
 
@@ -21,17 +21,17 @@ library(highcharter)
 
  __*Updated by Nov.28 2018*__
  
-__Testimate:  Deeper Analysis Idea!!! record stack size every half hour, plot specific ZouShi line within a single session! Attempt to test the hypothesis of 1. Do I Tilt? 2.Late night loose? 3. Player pool correlates with time __
+__Testimate:  Idea for Deeper Analysis! Record stack sizes every half hour while playing, to create function to plot trend line for each single session as EDA, based on which I may attempt to propose and test some hypotheses of my key poker playing charactistics, for example: 1. I don't go tilt, am I? 2. Most of my winning come from players playing much loose in the late session, is that true? 3. I have dicipline, don't I?__
 
 ### 1. Data Preparation
 
-```{r}
+```{r First City Settled!}
 #filePath <- file.choose()
 filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"
 GoogleSheet <- read_excel(filePath)
 
 Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesStart), sesEnd = ymd_hms(sesEnd),
-                             sesLength = as.numeric(sesEnd - sesStart), #directly make substraction between times
+                             sesLength = round( as.numeric(sesEnd - sesStart), 2), #directly make substraction between times
                              Profit = cashOut - buyIn, 
                              profitPerHr = Profit/sesLength,
                              totalProfit = promoBonus + Profit,
@@ -48,6 +48,26 @@ Testimate
 ```
 
  <https://r4ds.had.co.nz/tibbles.html> 10.3.1
+
+
+
+```{r Which day should I play?}
+Testimate %>% 
+  group_by(Day) %>%
+  summarise(
+    count = n(),
+    sesLengthByDay = round( mean(sesLength),2),
+    profitByDay = mean(Profit),
+    profitPerHrByDay = round(mean(profitPerHr),2),
+    totalProfitByDay = mean(totalProfit),
+    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2),
+    buyInByDay = round(mean(buyIn),2),
+    cashOutByDay = round(mean(cashOut),2)
+    )
+
+# add highcharts for individual day profit trend
+
+```
 
 
 
@@ -90,7 +110,7 @@ highchart() %>%
              list(from = 12.5, to = 13.5, color = "#E0FFFF")
              )) %>%
   hc_yAxis(plotLines = list(
-             list(value = 0, width = 3, color = "black")
+             list(value = 0, width = 3, color = 'black')
            ))
     
 ```
