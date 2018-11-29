@@ -64,7 +64,7 @@ Testimate
 #library(highcharter)
 series = list(
   list(
-    name = 'Total Profit for One Session',
+    name = 'Total Profit for One Session, stratified by day',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -74,15 +74,23 @@ highchart() %>%
   hc_add_series_list(series) %>% 
   hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]], # or day
            plotBands = list(
-             list(from = 2.5, to = 3.5, color = "rgba(68, 170, 213, 0.1)"), # may be colored by day
-             list(from = 3.5, to = 4.5, color = "#FAEBD7"),
-             list(from = 4.5, to = 5.5, color = "rgba(68, 170, 213, 0.1)"),
-             list(from = 5.5, to = 6.5, color = "#FAEBD7"),
-             list(from = 6.5, to = 7.5, color = "rgba(68, 170, 213, 0.1)"),
-             list(from = 7.5, to = 8.5, color = "#FAEBD7")
+             list(from = -0.5, to = 0.5, color = "#BDFCC9"), # may be colored by day 
+             list(from = 0.5, to = 1.5, color = "#FFFACD"),
+             list(from = 1.5, to = 2.5, color = "#E6E6FA"),
+             list(from = 2.5, to = 3.5, color = "#E6E6FA"),
+             list(from = 3.5, to = 4.5, color = "#E0FFFF"),
+             list(from = 4.5, to = 5.5, color = "#FFFACD"),
+             list(from = 5.5, to = 6.5, color = "#E0FFFF"),
+             list(from = 6.5, to = 7.5, color = "#FFFACD"),
+             list(from = 7.5, to = 8.5, color = "#E0FFFF"),
+             list(from = 8.5, to = 9.5, color = "#FFFACD"),
+             list(from = 9.5, to = 10.5, color = "#FFFACD"),
+             list(from = 10.5, to = 11.5, color = "#E0FFFF"),
+             list(from = 11.5, to = 12.5, color = "#E6E6FA"),
+             list(from = 12.5, to = 13.5, color = "#E0FFFF")
              )) %>%
   hc_yAxis(plotLines = list(
-             list(value = 0, width = 2, color = "black")
+             list(value = 0, width = 3, color = "black")
            ))
     
 ```
@@ -90,8 +98,13 @@ highchart() %>%
 ```{r}
 series = list(
   list(
+    name = 'Cumulative Profit',
+    color = '#EEAD0E', 
+    data = Testimate %>% select(accuProfit) %>% .[[1]]
+  ),
+  list(
     name = 'Cumulative Total Profit (Counting Promo Bonus)',
-    color = '#FFD700', 
+    color = '#FF7D40', 
     data = Testimate %>% select(accuTotalProfit) %>% .[[1]]
   )
 )
