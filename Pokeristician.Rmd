@@ -1,6 +1,6 @@
 ---
 title: "What's my Game?"
-author: "Yuqing Xue"
+author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
 #date: "November 16, 2018"
 output: html_document
 ---
@@ -18,10 +18,12 @@ library(highcharter)
 ```
 
 ## My Statistical Analysis for My Poker Statistics
+<br>
 
  __*Updated by Nov.28 2018*__
  
 __Testimate:  Idea for Deeper Analysis! Record stack sizes every half hour while playing, to create function to plot trend line for each single session as EDA, based on which I may attempt to propose and test some hypotheses of my key poker playing charactistics, for example: 1. I don't go tilt, am I? 2. Most of my winning come from players playing much loose in the late session, is that true? 3. I have dicipline, don't I?__
+<br>
 
 ### 1. Data Preparation
 
@@ -43,15 +45,18 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfitPerHr = accuTotalProfit/accuHour); 
 
 #options(tibble.width = Inf)  
+options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
 Testimate
 
 ```
 
- <https://r4ds.had.co.nz/tibbles.html> 10.3.1
+ tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
 
 
 
 ```{r Which day should I play?}
+#options(tibble.width = Inf)  
+
 Testimate %>% 
   group_by(Day) %>%
   summarise(
@@ -69,9 +74,10 @@ Testimate %>%
 
 ```
 
-
+<br>
 
 ### 2. Apply `htmlwidget` -> `highcharter`
+<br>
 
 #### Initially inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r)
 
@@ -84,7 +90,7 @@ Testimate %>%
 #library(highcharter)
 series = list(
   list(
-    name = 'Total Profit for One Session, stratified by day',
+    name = 'Total Profit (including promo bonus) for each session, stratified by stake ( yellow: 1/2, green: 1/3 )',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -94,20 +100,8 @@ highchart() %>%
   hc_add_series_list(series) %>% 
   hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]], # or day
            plotBands = list(
-             list(from = -0.5, to = 0.5, color = "#BDFCC9"), # may be colored by day 
-             list(from = 0.5, to = 1.5, color = "#FFFACD"),
-             list(from = 1.5, to = 2.5, color = "#E6E6FA"),
-             list(from = 2.5, to = 3.5, color = "#E6E6FA"),
-             list(from = 3.5, to = 4.5, color = "#E0FFFF"),
-             list(from = 4.5, to = 5.5, color = "#FFFACD"),
-             list(from = 5.5, to = 6.5, color = "#E0FFFF"),
-             list(from = 6.5, to = 7.5, color = "#FFFACD"),
-             list(from = 7.5, to = 8.5, color = "#E0FFFF"),
-             list(from = 8.5, to = 9.5, color = "#FFFACD"),
-             list(from = 9.5, to = 10.5, color = "#FFFACD"),
-             list(from = 10.5, to = 11.5, color = "#E0FFFF"),
-             list(from = 11.5, to = 12.5, color = "#E6E6FA"),
-             list(from = 12.5, to = 13.5, color = "#E0FFFF")
+             list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
+             list(from = 14.5, to = 15.5, color = "#BDFCC9")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 3, color = 'black')
@@ -123,7 +117,7 @@ series = list(
     data = Testimate %>% select(accuProfit) %>% .[[1]]
   ),
   list(
-    name = 'Cumulative Total Profit (Counting Promo Bonus)',
+    name = 'Cumulative Total Profit (including promo bonus)',
     color = '#FF7D40', 
     data = Testimate %>% select(accuTotalProfit) %>% .[[1]]
   )
@@ -142,7 +136,7 @@ series = list(
     data = Testimate %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
   ),
   list(
-    name = 'Cumulative Total Profit Per Hour (Counting Promo Bonus)',
+    name = 'Cumulative Total Profit Per Hour (including promo bonus)',
     color = '#FF7D40',
     data = Testimate %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
   )
