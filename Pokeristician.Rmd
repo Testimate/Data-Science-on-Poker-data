@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-#date: "November 16, 2018"
+date: "November 16, 2018"
 output: html_document
 ---
 
@@ -14,15 +14,22 @@ library(tidyverse)
 library(readxl)
 library(lubridate)
 
+# https://blogs.reed.edu/ed-tech/2015/10/creating-nice-tables-using-r-markdown/
+library(knitr) #kable
+#library(xtable) # xtable: generate LaTeX code to output table into PDF  
+
 library(highcharter)
 ```
 
-## My Statistical Analysis for My Poker Statistics
+_Dec 5th: Idea: add vertical dash line between the 14th session (Sat) with the 15th session (Thu) to separate my playing mindset as pre-"The Course" era and post-"The Course" era: The Book by Ed Miller_
+
+_Dec 5th: Implementation: create a separate dataset 'Enlightened' instead_
+
 <br>
 
- __*Updated by Nov.28 2018*__
- 
-__Testimate:  Idea for Deeper Analysis! Record stack sizes every half hour while playing, to create function to plot trend line for each single session as EDA, based on which I may attempt to propose and test some hypotheses of my key poker playing charactistics, for example: 1. I don't go tilt, am I? 2. Most of my winning come from players playing much loose in the late session, is that true? 3. I have dicipline, don't I?__
+
+## My Statistical Analysis for My Poker Statistics
+
 <br>
 
 ### 1. Data Preparation
@@ -42,20 +49,41 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuProfit = cumsum(Profit), 
                              accuProfitPerHr = accuProfit/accuHour,
                              accuTotalProfit = cumsum(totalProfit),
-                             accuTotalProfitPerHr = accuTotalProfit/accuHour); 
+                             accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 
-#options(tibble.width = Inf)  
-options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-Testimate
+# options(tibble.width = Inf)  
+# options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
+# Testimate
+
 
 ```
 
- tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
+Tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
+
+<br>
+
+#### A separate data set to be analyzed: Session with "The Course" mindset
+
+```{r !DarkAge, Enlightend}
+#Enlightened <- Testimate %>% filter(Date >= "2018-11-29") intuitive, but wrong, w.r.t cumulative values which are computed/had memory from overall dataset
+
+EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesStart), sesEnd = ymd_hms(sesEnd),
+                                  sesLength = round( as.numeric(sesEnd - sesStart), 2), #directly make substraction between times
+                                  Profit = cashOut - buyIn, 
+                                  profitPerHr = Profit/sesLength,
+                                  totalProfit = promoBonus + Profit,
+                                  totalProfitPerHr = totalProfit/sesLength) %>% 
+                                  filter(Date >= "2018-11-29") %>% mutate(accuHour = cumsum(sesLength),
+                                                                   accuProfit = cumsum(Profit), 
+                                                                   accuProfitPerHr = accuProfit/accuHour,
+                                                                   accuTotalProfit = cumsum(totalProfit),
+                                                                   accuTotalProfitPerHr = accuTotalProfit/accuHour) 
+```
 
 
 
-```{r Which day should I play?}
-#options(tibble.width = Inf)  
+```{r Which day should I play? Total}
+options(tibble.width = Inf)  
 
 Testimate %>% 
   group_by(Day) %>%
@@ -64,13 +92,32 @@ Testimate %>%
     sesLengthByDay = round( mean(sesLength),2),
     profitByDay = mean(Profit),
     profitPerHrByDay = round(mean(profitPerHr),2),
-    totalProfitByDay = mean(totalProfit),
+    totalProfitByDay = round(mean(totalProfit),2),
     totalProfitPerHrByDay = round(mean(totalProfitPerHr),2),
     buyInByDay = round(mean(buyIn),2),
     cashOutByDay = round(mean(cashOut),2)
-    )
+    ) %>% kable()
 
-# add highcharts for individual day profit trend
+```
+
+<br>
+
+
+```{r Which day should I play? Enlightened Era}
+options(tibble.width = Inf)  
+
+EnlightenedEra %>% 
+  group_by(Day) %>%
+  summarise(
+    count = n(),
+    sesLengthByDay = round( mean(sesLength),2),
+    profitByDay = mean(Profit),
+    profitPerHrByDay = round(mean(profitPerHr),2),
+    totalProfitByDay = round(mean(totalProfit),2),
+    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2),
+    buyInByDay = round(mean(buyIn),2),
+    cashOutByDay = round(mean(cashOut),2)
+    ) %>% kable()
 
 ```
 
@@ -81,16 +128,20 @@ Testimate %>%
 
 #### Initially inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r)
 
-#### Pacakge Author Joshua Kunst's RPub <https://rpubs.com/jbkunst/highcharter>
+#### Package Author Joshua Kunst's RPub <https://rpubs.com/jbkunst/highcharter>
 
 #### Additional `highcharter` learning material by [Danton Noriega](https://dantonnoriega.github.io/ultinomics.org/post/2017-04-05-highcharter-explainer.html) and [Nana Boateng](https://rstudio-pubs-static.s3.amazonaws.com/304105_70f2ad540827454e934117e3d90f6c1a.html)
 
+<br>
+
+#### A.1 Session Profit (Overall)
 
 ```{r}
 #library(highcharter)
+
 series = list(
   list(
-    name = 'Total Profit (including promo bonus) for each session, stratified by stake ( yellow: 1/2, green: 1/3 )',
+    name = 'Total Profit (including promo bonus) for each session, stratified by stake [ yellow: 1/2, green: 1/3 ]',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -101,13 +152,46 @@ highchart() %>%
   hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]], # or day
            plotBands = list(
              list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
-             list(from = 14.5, to = 15.5, color = "#BDFCC9")
+             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
+             list(from = 15.5, to = 16.5, color = "#FFFACD")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 3, color = 'black')
            ))
     
 ```
+
+<br>
+
+#### A.2 Session Profit (Enlightened)
+
+```{r}
+series = list(
+  list(
+    name = 'Total Profit (including promo bonus) for each session, stratified by stake [ yellow: 1/2, green: 1/3 ]',
+    color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
+    data = EnlightenedEra %>% select(totalProfit) %>% .[[1]]
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% 
+  hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]], # or day
+           plotBands = list(
+             list(from = -0.5, to = 0.5, color = "#FFFACD"), 
+             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
+             list(from = 1.5, to = 2.5, color = "#FFFACD")
+             )) %>%
+  hc_yAxis(plotLines = list(
+             list(value = 0, width = 3, color = 'black')
+           ))
+    
+```
+
+
+<br>
+
+#### B.1 Cumulative Profit (Overall)
 
 ```{r}
 series = list(
@@ -124,9 +208,44 @@ series = list(
 )
 
 highchart() %>%
-  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]])
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]],
+                                          plotBands = list(
+                                            list(from = -0.5, to = 14.5, color = "#FFFACD"),
+                                            list(from = 14.5, to = 15.5, color = "#BDFCC9"),
+                                            list(from = 15.5, to = 16.5, color = "#FFFACD")
+                                            ))
 ```
 
+<br>
+
+#### B.2 Cumulative Profit (Enlightened)
+
+```{r}
+series = list(
+  list(
+    name = 'Cumulative Profit',
+    color = '#EEAD0E', 
+    data = EnlightenedEra %>% select(accuProfit) %>% .[[1]]
+  ),
+  list(
+    name = 'Cumulative Total Profit (including promo bonus)',
+    color = '#FF7D40', 
+    data = EnlightenedEra %>% select(accuTotalProfit) %>% .[[1]]
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]],
+                                          plotBands = list(
+                                            list(from = -0.5, to = 0.5, color = "#FFFACD"),  
+                                            list(from = 0.5, to = 1.5, color = "#BDFCC9"),
+                                            list(from = 1.5, to = 2.5, color = "#FFFACD")
+                                            ))
+```
+
+<br>
+
+#### C.1 Cumulative Profit Rate (Overall)
 
 ```{r}
 series = list(
@@ -143,11 +262,40 @@ series = list(
 )
 
 highchart() %>%
-  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]])
+  hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]],
+                                          plotBands = list(
+                                            list(from = -0.5, to = 14.5, color = "#FFFACD"),
+                                            list(from = 14.5, to = 15.5, color = "#BDFCC9"),
+                                            list(from = 15.5, to = 16.5, color = "#FFFACD")
+                                            ))
 ```
 
+<br>
 
+#### C.2 Cumulative Profit rate (Enlightened)
 
+```{r}
+series = list(
+  list(
+    name = 'Cumulative Profit Per Hour',
+    color = '#EEAD0E',
+    data = EnlightenedEra %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
+  ),
+  list(
+    name = 'Cumulative Total Profit Per Hour (including promo bonus)',
+    color = '#FF7D40',
+    data = EnlightenedEra %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]],
+                                          plotBands = list(
+                                            list(from = -0.5, to = 0.5, color = "#FFFACD"),  
+                                            list(from = 0.5, to = 1.5, color = "#BDFCC9"),
+                                            list(from = 1.5, to = 2.5, color = "#FFFACD")
+                                            ))
+```
 
 `highcharter` seems to be outdated on CRAN. Directly install from github via
 
