@@ -51,9 +51,9 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 
-# options(tibble.width = Inf)  
-# options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-# Testimate
+#options(tibble.width = Inf)  
+#options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
+#Testimate
 
 
 ```
@@ -78,6 +78,9 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
                                                                    accuProfitPerHr = accuProfit/accuHour,
                                                                    accuTotalProfit = cumsum(totalProfit),
                                                                    accuTotalProfitPerHr = accuTotalProfit/accuHour) 
+#options(tibble.width = Inf)  
+#options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
+#EnlightenedEra
 ```
 
 
@@ -90,12 +93,10 @@ Testimate %>%
   summarise(
     count = n(),
     sesLengthByDay = round( mean(sesLength),2),
-    profitByDay = mean(Profit),
+    profitByDay = round(mean(Profit),2),
     profitPerHrByDay = round(mean(profitPerHr),2),
     totalProfitByDay = round(mean(totalProfit),2),
-    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2),
-    buyInByDay = round(mean(buyIn),2),
-    cashOutByDay = round(mean(cashOut),2)
+    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2)
     ) %>% kable()
 
 ```
@@ -111,12 +112,10 @@ EnlightenedEra %>%
   summarise(
     count = n(),
     sesLengthByDay = round( mean(sesLength),2),
-    profitByDay = mean(Profit),
+    profitByDay = round(mean(Profit),2),
     profitPerHrByDay = round(mean(profitPerHr),2),
     totalProfitByDay = round(mean(totalProfit),2),
-    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2),
-    buyInByDay = round(mean(buyIn),2),
-    cashOutByDay = round(mean(cashOut),2)
+    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2)
     ) %>% kable()
 
 ```
@@ -141,7 +140,7 @@ EnlightenedEra %>%
 
 series = list(
   list(
-    name = 'Total Profit (including promo bonus) for each session, stratified by stake [ yellow: 1/2, green: 1/3 ]',
+    name = 'Total Profit for each session (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: mix]',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -153,7 +152,8 @@ highchart() %>%
            plotBands = list(
              list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
              list(from = 14.5, to = 15.5, color = "#BDFCC9"),
-             list(from = 15.5, to = 16.5, color = "#FFFACD")
+             list(from = 15.5, to = 16.5, color = "#FFFACD"),
+             list(from = 16.5, to = 17.5, color = "#CAFF70")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 3, color = 'black')
@@ -163,12 +163,12 @@ highchart() %>%
 
 <br>
 
-#### A.2 Session Profit (Enlightened)
+#### A.2 Session Profit (Enlightened Era)
 
 ```{r}
 series = list(
   list(
-    name = 'Total Profit (including promo bonus) for each session, stratified by stake [ yellow: 1/2, green: 1/3 ]',
+    name = 'Total Profit for each session in Enlightened Era (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: mix]',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = EnlightenedEra %>% select(totalProfit) %>% .[[1]]
   )
@@ -180,7 +180,8 @@ highchart() %>%
            plotBands = list(
              list(from = -0.5, to = 0.5, color = "#FFFACD"), 
              list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-             list(from = 1.5, to = 2.5, color = "#FFFACD")
+             list(from = 1.5, to = 2.5, color = "#FFFACD"),
+             list(from = 2.5, to = 3.5, color = "#CAFF70")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 3, color = 'black')
@@ -201,7 +202,7 @@ series = list(
     data = Testimate %>% select(accuProfit) %>% .[[1]]
   ),
   list(
-    name = 'Cumulative Total Profit (including promo bonus)',
+    name = 'Cumulative Total Profit (promo bonus included)',
     color = '#FF7D40', 
     data = Testimate %>% select(accuTotalProfit) %>% .[[1]]
   )
@@ -212,7 +213,8 @@ highchart() %>%
                                           plotBands = list(
                                             list(from = -0.5, to = 14.5, color = "#FFFACD"),
                                             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
-                                            list(from = 15.5, to = 16.5, color = "#FFFACD")
+                                            list(from = 15.5, to = 16.5, color = "#FFFACD"),
+                                            list(from = 16.5, to = 17.5, color = "#CAFF70")
                                             ))
 ```
 
@@ -223,12 +225,12 @@ highchart() %>%
 ```{r}
 series = list(
   list(
-    name = 'Cumulative Profit',
+    name = 'Cumulative Profit in Enlightened Era',
     color = '#EEAD0E', 
     data = EnlightenedEra %>% select(accuProfit) %>% .[[1]]
   ),
   list(
-    name = 'Cumulative Total Profit (including promo bonus)',
+    name = 'Cumulative Total Profit in Enlightened Era (promo bonus included)',
     color = '#FF7D40', 
     data = EnlightenedEra %>% select(accuTotalProfit) %>% .[[1]]
   )
@@ -239,13 +241,14 @@ highchart() %>%
                                           plotBands = list(
                                             list(from = -0.5, to = 0.5, color = "#FFFACD"),  
                                             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-                                            list(from = 1.5, to = 2.5, color = "#FFFACD")
+                                            list(from = 1.5, to = 2.5, color = "#FFFACD"),
+                                            list(from = 2.5, to = 3.5, color = "#CAFF70")
                                             ))
 ```
 
 <br>
 
-#### C.1 Cumulative Profit Rate (Overall)
+#### C.1 Cumulative Profit per hour Rate (Overall)
 
 ```{r}
 series = list(
@@ -255,7 +258,7 @@ series = list(
     data = Testimate %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
   ),
   list(
-    name = 'Cumulative Total Profit Per Hour (including promo bonus)',
+    name = 'Cumulative Total Profit Per Hour (promo bonus included)',
     color = '#FF7D40',
     data = Testimate %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
   )
@@ -266,23 +269,24 @@ highchart() %>%
                                           plotBands = list(
                                             list(from = -0.5, to = 14.5, color = "#FFFACD"),
                                             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
-                                            list(from = 15.5, to = 16.5, color = "#FFFACD")
+                                            list(from = 15.5, to = 16.5, color = "#FFFACD"),
+                                            list(from = 16.5, to = 17.5, color = "#CAFF70")
                                             ))
 ```
 
 <br>
 
-#### C.2 Cumulative Profit rate (Enlightened)
+#### C.2 Cumulative Profit per hour rate (Enlightened)
 
 ```{r}
 series = list(
   list(
-    name = 'Cumulative Profit Per Hour',
+    name = 'Cumulative Profit Per Hour in Enlightened Era',
     color = '#EEAD0E',
     data = EnlightenedEra %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
   ),
   list(
-    name = 'Cumulative Total Profit Per Hour (including promo bonus)',
+    name = 'Cumulative Total Profit Per Hour in Enlightened Era (promo bonus included)',
     color = '#FF7D40',
     data = EnlightenedEra %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
   )
@@ -293,7 +297,8 @@ highchart() %>%
                                           plotBands = list(
                                             list(from = -0.5, to = 0.5, color = "#FFFACD"),  
                                             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-                                            list(from = 1.5, to = 2.5, color = "#FFFACD")
+                                            list(from = 1.5, to = 2.5, color = "#FFFACD"),
+                                            list(from = 2.5, to = 3.5, color = "#CAFF70")
                                             ))
 ```
 
