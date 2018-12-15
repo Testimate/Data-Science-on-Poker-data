@@ -40,6 +40,7 @@ filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xls
 GoogleSheet <- read_excel(filePath)
 
 Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesStart), sesEnd = ymd_hms(sesEnd),
+                             #Stake = as.integer(Stake),
                              sesLength = round( as.numeric(sesEnd - sesStart), 2), #directly make substraction between times
                              Profit = cashOut - buyIn, 
                              profitPerHr = Profit/sesLength,
@@ -51,9 +52,9 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 
-options(tibble.width = Inf)  
+#options(tibble.width = Inf)  
 #options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-Testimate
+#Testimate
 
 
 ```
@@ -68,7 +69,8 @@ Tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
 #Enlightened <- Testimate %>% filter(Date >= "2018-11-29") intuitive, but wrong, w.r.t cumulative values which are computed/had memory from overall dataset
 
 EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesStart), sesEnd = ymd_hms(sesEnd),
-                                  sesLength = round( as.numeric(sesEnd - sesStart), 2), #directly make substraction between times
+                                  sesLength = round( as.numeric(sesEnd - sesStart), 2), #directly make substraction between times                             
+                                  #Stake = as.integer(Stake),
                                   Profit = cashOut - buyIn, 
                                   profitPerHr = Profit/sesLength,
                                   totalProfit = promoBonus + Profit,
@@ -78,13 +80,13 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
                                                                    accuProfitPerHr = accuProfit/accuHour,
                                                                    accuTotalProfit = cumsum(totalProfit),
                                                                    accuTotalProfitPerHr = accuTotalProfit/accuHour) 
-options(tibble.width = Inf)  
+#options(tibble.width = Inf)  
 #options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-EnlightenedEra
+#EnlightenedEra
 ```
 
 
-
+#### Group by day: Overall
 ```{r Which day should I play? Total}
 options(tibble.width = Inf)  
 
@@ -103,7 +105,7 @@ Testimate %>%
 
 <br>
 
-
+#### Group by day: Enlightened Era
 ```{r Which day should I play? Enlightened Era}
 options(tibble.width = Inf)  
 
@@ -140,7 +142,7 @@ EnlightenedEra %>%
 
 series = list(
   list(
-    name = 'Total Profit for each session (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: mix]',
+    name = 'Total Profit for each session (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: tough lineup]',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -153,9 +155,10 @@ highchart() %>%
              list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
              list(from = 14.5, to = 15.5, color = "#BDFCC9"),
              list(from = 15.5, to = 16.5, color = "#FFFACD"),
-             list(from = 16.5, to = 17.5, color = "#CAFF70"),
+             list(from = 16.5, to = 18.5, color = "#FFFACD"),
              list(from = 17.5, to = 18.5, color = "#CAFF70"),
-             list(from = 18.5, to = 19.5, color = "#FFFACD")
+             list(from = 18.5, to = 19.5, color = "#FFFACD"),
+             list(from = 19.5, to = 20.5, color = "#BDFCC9")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 3, color = 'black')
@@ -170,7 +173,7 @@ highchart() %>%
 ```{r}
 series = list(
   list(
-    name = 'Total Profit for each session in Enlightened Era (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: mix]',
+    name = 'Total Profit for each session in Enlightened Era (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: tough lineup]',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = EnlightenedEra %>% select(totalProfit) %>% .[[1]]
   )
@@ -182,10 +185,10 @@ highchart() %>%
            plotBands = list(
              list(from = -0.5, to = 0.5, color = "#FFFACD"), 
              list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-             list(from = 1.5, to = 2.5, color = "#FFFACD"),
-             list(from = 2.5, to = 3.5, color = "#CAFF70"),
+             list(from = 1.5, to = 3.5, color = "#FFFACD"),
              list(from = 3.5, to = 4.5, color = "#CAFF70"),
-             list(from = 4.5, to = 5.5, color = "#FFFACD")
+             list(from = 4.5, to = 5.5, color = "#FFFACD"),
+             list(from = 5.5, to = 6.5, color = "#BDFCC9")
              )) %>%
   hc_yAxis(plotLines = list(
              list(value = 0, width = 3, color = 'black')
@@ -215,12 +218,13 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 14.5, color = "#FFFACD"),
+                                            list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
                                             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
                                             list(from = 15.5, to = 16.5, color = "#FFFACD"),
-                                            list(from = 16.5, to = 17.5, color = "#CAFF70"),
+                                            list(from = 16.5, to = 18.5, color = "#FFFACD"),
                                             list(from = 17.5, to = 18.5, color = "#CAFF70"),
-                                            list(from = 18.5, to = 19.5, color = "#FFFACD")
+                                            list(from = 18.5, to = 19.5, color = "#FFFACD"),
+                                            list(from = 19.5, to = 20.5, color = "#BDFCC9")
                                             ))
 ```
 
@@ -245,12 +249,12 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 0.5, color = "#FFFACD"),  
+                                            list(from = -0.5, to = 0.5, color = "#FFFACD"), 
                                             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-                                            list(from = 1.5, to = 2.5, color = "#FFFACD"),
-                                            list(from = 2.5, to = 3.5, color = "#CAFF70"),
+                                            list(from = 1.5, to = 3.5, color = "#FFFACD"),
                                             list(from = 3.5, to = 4.5, color = "#CAFF70"),
-                                            list(from = 4.5, to = 5.5, color = "#FFFACD")
+                                            list(from = 4.5, to = 5.5, color = "#FFFACD"),
+                                            list(from = 5.5, to = 6.5, color = "#BDFCC9")
                                             ))
 ```
 
@@ -275,12 +279,13 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 14.5, color = "#FFFACD"),
+                                            list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
                                             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
                                             list(from = 15.5, to = 16.5, color = "#FFFACD"),
-                                            list(from = 16.5, to = 17.5, color = "#CAFF70"),
+                                            list(from = 16.5, to = 18.5, color = "#FFFACD"),
                                             list(from = 17.5, to = 18.5, color = "#CAFF70"),
-                                            list(from = 18.5, to = 19.5, color = "#FFFACD")
+                                            list(from = 18.5, to = 19.5, color = "#FFFACD"),
+                                            list(from = 19.5, to = 20.5, color = "#BDFCC9")
                                             ))
 ```
 
@@ -305,12 +310,12 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 0.5, color = "#FFFACD"),  
+                                            list(from = -0.5, to = 0.5, color = "#FFFACD"), 
                                             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-                                            list(from = 1.5, to = 2.5, color = "#FFFACD"),
-                                            list(from = 2.5, to = 3.5, color = "#CAFF70"),
+                                            list(from = 1.5, to = 3.5, color = "#FFFACD"),
                                             list(from = 3.5, to = 4.5, color = "#CAFF70"),
-                                            list(from = 4.5, to = 5.5, color = "#FFFACD")
+                                            list(from = 4.5, to = 5.5, color = "#FFFACD"),
+                                            list(from = 5.5, to = 6.5, color = "#BDFCC9")
                                             ))
 ```
 
