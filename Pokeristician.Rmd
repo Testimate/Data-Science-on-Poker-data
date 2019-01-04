@@ -142,7 +142,7 @@ EnlightenedEra %>%
 
 series = list(
   list(
-    name = 'Total Profit for each session (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: tough lineup]',
+    name = 'Total Profit for each session (promo bonus included), stratified by stake [yellow: 1/2, green: 1/3, lime: mix]',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -152,19 +152,20 @@ highchart() %>%
   hc_add_series_list(series) %>% 
   hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]], # or day
            plotBands = list(
-             list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
-             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
-             list(from = 15.5, to = 16.5, color = "#FFFACD"),
-             list(from = 16.5, to = 18.5, color = "#FFFACD"),
-             list(from = 17.5, to = 18.5, color = "#CAFF70"),
-             list(from = 18.5, to = 19.5, color = "#FFFACD"),
-             list(from = 19.5, to = 20.5, color = "#BDFCC9"),
-             list(from = 20.5, to = 21.5, color = "#FFFACD"),
-             list(from = 21.5, to = 22.5, color = "#BDFCC9")
-             )) %>%
+              list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
+              list(from = 14.5, to = 15.5, color = "#BDFCC9"),
+              list(from = 15.5, to = 16.5, color = "#FFFACD"),
+              list(from = 16.5, to = 18.5, color = "#FFFACD"),
+              list(from = 17.5, to = 18.5, color = "#CAFF70"),
+              list(from = 18.5, to = 19.5, color = "#FFFACD"),
+              list(from = 19.5, to = 20.5, color = "#BDFCC9"),
+              list(from = 20.5, to = 21.5, color = "#FFFACD"),
+              list(from = 21.5, to = 22.5, color = "#BDFCC9"),
+              list(from = 22.5, to = 23.5, color = "#CAFF70")
+              )) %>%
   hc_yAxis(plotLines = list(
-             list(value = 0, width = 3, color = 'black')
-           ))
+              list(value = 0, width = 3, color = 'black')
+              ))
     
 ```
 
@@ -185,18 +186,19 @@ highchart() %>%
   hc_add_series_list(series) %>% 
   hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]], # or day
            plotBands = list(
-             list(from = -0.5, to = 0.5, color = "#FFFACD"), 
-             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-             list(from = 1.5, to = 3.5, color = "#FFFACD"),
-             list(from = 3.5, to = 4.5, color = "#CAFF70"),
-             list(from = 4.5, to = 5.5, color = "#FFFACD"),
-             list(from = 5.5, to = 6.5, color = "#BDFCC9"),
-             list(from = 6.5, to = 7.5, color = "#FFFACD"),
-             list(from = 7.5, to = 8.5, color = "#BDFCC9")
-             )) %>%
+              list(from = -0.5, to = 0.5, color = "#FFFACD"), 
+              list(from = 0.5, to = 1.5, color = "#BDFCC9"),
+              list(from = 1.5, to = 3.5, color = "#FFFACD"),
+              list(from = 3.5, to = 4.5, color = "#CAFF70"),
+              list(from = 4.5, to = 5.5, color = "#FFFACD"),
+              list(from = 5.5, to = 6.5, color = "#BDFCC9"),
+              list(from = 6.5, to = 7.5, color = "#FFFACD"),
+              list(from = 7.5, to = 8.5, color = "#BDFCC9"),
+              list(from = 8.5, to = 9.5, color = "#CAFF70")
+              )) %>%
   hc_yAxis(plotLines = list(
-             list(value = 0, width = 3, color = 'black')
-           ))
+              list(value = 0, width = 3, color = 'black')
+              ))
     
 ```
 
@@ -222,14 +224,17 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
-                                            list(from = 14.5, to = 15.5, color = "#BDFCC9"),
-                                            list(from = 15.5, to = 16.5, color = "#FFFACD"),
-                                            list(from = 16.5, to = 18.5, color = "#FFFACD"),
-                                            list(from = 17.5, to = 18.5, color = "#CAFF70"),
-                                            list(from = 18.5, to = 19.5, color = "#FFFACD"),
-                                            list(from = 19.5, to = 20.5, color = "#BDFCC9")
-                                            ))
+                                             list(from = -0.5, to = 14.5, color = "#FFFACD"), # may be colored by day 
+                                             list(from = 14.5, to = 15.5, color = "#BDFCC9"),
+                                             list(from = 15.5, to = 16.5, color = "#FFFACD"),
+                                             list(from = 16.5, to = 18.5, color = "#FFFACD"),
+                                             list(from = 17.5, to = 18.5, color = "#CAFF70"),
+                                             list(from = 18.5, to = 19.5, color = "#FFFACD"),
+                                             list(from = 19.5, to = 20.5, color = "#BDFCC9"),
+                                             list(from = 20.5, to = 21.5, color = "#FFFACD"),
+                                             list(from = 21.5, to = 22.5, color = "#BDFCC9"),
+                                             list(from = 22.5, to = 23.5, color = "#CAFF70")
+                                             ))
 ```
 
 <br>
@@ -253,13 +258,16 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 0.5, color = "#FFFACD"), 
-                                            list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-                                            list(from = 1.5, to = 3.5, color = "#FFFACD"),
-                                            list(from = 3.5, to = 4.5, color = "#CAFF70"),
-                                            list(from = 4.5, to = 5.5, color = "#FFFACD"),
-                                            list(from = 5.5, to = 6.5, color = "#BDFCC9")
-                                            ))
+                                             list(from = -0.5, to = 0.5, color = "#FFFACD"), 
+                                             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
+                                             list(from = 1.5, to = 3.5, color = "#FFFACD"),
+                                             list(from = 3.5, to = 4.5, color = "#CAFF70"),
+                                             list(from = 4.5, to = 5.5, color = "#FFFACD"),
+                                             list(from = 5.5, to = 6.5, color = "#BDFCC9"),
+                                             list(from = 6.5, to = 7.5, color = "#FFFACD"),
+                                             list(from = 7.5, to = 8.5, color = "#BDFCC9"),
+                                             list(from = 8.5, to = 9.5, color = "#CAFF70")
+                                             ))
 ```
 
 <br>
@@ -289,7 +297,10 @@ highchart() %>%
                                             list(from = 16.5, to = 18.5, color = "#FFFACD"),
                                             list(from = 17.5, to = 18.5, color = "#CAFF70"),
                                             list(from = 18.5, to = 19.5, color = "#FFFACD"),
-                                            list(from = 19.5, to = 20.5, color = "#BDFCC9")
+                                            list(from = 19.5, to = 20.5, color = "#BDFCC9"),
+                                            list(from = 20.5, to = 21.5, color = "#FFFACD"),
+                                            list(from = 21.5, to = 22.5, color = "#BDFCC9"),
+                                            list(from = 22.5, to = 23.5, color = "#CAFF70")
                                             ))
 ```
 
@@ -314,13 +325,16 @@ series = list(
 highchart() %>%
   hc_add_series_list(series) %>% hc_xAxis(categories = EnlightenedEra %>% select(Day) %>% .[[1]],
                                           plotBands = list(
-                                            list(from = -0.5, to = 0.5, color = "#FFFACD"), 
-                                            list(from = 0.5, to = 1.5, color = "#BDFCC9"),
-                                            list(from = 1.5, to = 3.5, color = "#FFFACD"),
-                                            list(from = 3.5, to = 4.5, color = "#CAFF70"),
-                                            list(from = 4.5, to = 5.5, color = "#FFFACD"),
-                                            list(from = 5.5, to = 6.5, color = "#BDFCC9")
-                                            ))
+                                             list(from = -0.5, to = 0.5, color = "#FFFACD"), 
+                                             list(from = 0.5, to = 1.5, color = "#BDFCC9"),
+                                             list(from = 1.5, to = 3.5, color = "#FFFACD"),
+                                             list(from = 3.5, to = 4.5, color = "#CAFF70"),
+                                             list(from = 4.5, to = 5.5, color = "#FFFACD"),
+                                             list(from = 5.5, to = 6.5, color = "#BDFCC9"),
+                                             list(from = 6.5, to = 7.5, color = "#FFFACD"),
+                                             list(from = 7.5, to = 8.5, color = "#BDFCC9"),
+                                             list(from = 8.5, to = 9.5, color = "#CAFF70")
+                                             ))
 ```
 
 `highcharter` seems to be outdated on CRAN. Directly install from github via
