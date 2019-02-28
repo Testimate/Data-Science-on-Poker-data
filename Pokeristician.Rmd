@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest Update: Feb 19, 2019"
+date: "Nov 16, 2018, Latest Data Update: Feb 19, 2019"
 output: html_document
 ---
 
