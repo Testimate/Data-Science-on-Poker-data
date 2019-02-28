@@ -86,7 +86,7 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
 ```
 
 
-#### Group by day: Overall
+#### Profit & total profit by day & by day per hour: Overall 
 ```{r Which day should I play? Total}
 options(tibble.width = Inf)  
 
@@ -105,7 +105,7 @@ Testimate %>%
 
 <br>
 
-#### Group by day: Enlightened Era
+#### Profit & total profit by day & by day per hour: Enlightened Era
 ```{r Which day should I play? Enlightened Era}
 options(tibble.width = Inf)  
 
