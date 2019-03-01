@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest Data Update: Feb 19, 2019"
+date: "Nov 16, 2018, Latest Data Update: Mar 1st, 2019"
 output: html_document
 ---
 
@@ -52,9 +52,12 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 
-#options(tibble.width = Inf)  
-#options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-#Testimate
+# options(tibble.width = Inf)  
+# options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
+# Testimate
+
+# Day of Profit
+# Testimate %>% filter(Day == "Thu") 
 
 
 ```
@@ -166,7 +169,8 @@ highchart() %>%
               list(from = 24.5, to = 25.5, color = "#BDFCC9"),
               list(from = 25.5, to = 26.5, color = "#FFFACD"),
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
-              list(from = 27.5, to = 28.5, color = "#BDFCC9")
+              list(from = 27.5, to = 28.5, color = "#BDFCC9"),
+              list(from = 28.5, to = 29.5, color = "#FFFACD")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -204,7 +208,8 @@ highchart() %>%
               list(from = 10.5, to = 11.5, color = "#BDFCC9"),
               list(from = 11.5, to = 12.5, color = "#FFFACD"),
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
-              list(from = 13.5, to = 14.5, color = "#BDFCC9")
+              list(from = 13.5, to = 14.5, color = "#BDFCC9"),
+              list(from = 14.5, to = 15.5, color = "#FFFACD")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -249,7 +254,8 @@ highchart() %>%
               list(from = 24.5, to = 25.5, color = "#BDFCC9"),
               list(from = 25.5, to = 26.5, color = "#FFFACD"),
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
-              list(from = 27.5, to = 28.5, color = "#BDFCC9")
+              list(from = 27.5, to = 28.5, color = "#BDFCC9"),
+              list(from = 28.5, to = 29.5, color = "#FFFACD")
               ))
 ```
 
@@ -288,7 +294,8 @@ highchart() %>%
               list(from = 10.5, to = 11.5, color = "#BDFCC9"),
               list(from = 11.5, to = 12.5, color = "#FFFACD"),
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
-              list(from = 13.5, to = 14.5, color = "#BDFCC9")
+              list(from = 13.5, to = 14.5, color = "#BDFCC9"),
+              list(from = 14.5, to = 15.5, color = "#FFFACD")
               ))
 ```
 
@@ -328,7 +335,8 @@ highchart() %>%
               list(from = 24.5, to = 25.5, color = "#BDFCC9"),
               list(from = 25.5, to = 26.5, color = "#FFFACD"),
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
-              list(from = 27.5, to = 28.5, color = "#BDFCC9")
+              list(from = 27.5, to = 28.5, color = "#BDFCC9"),
+              list(from = 28.5, to = 29.5, color = "#FFFACD")
               ))
 ```
 
@@ -367,11 +375,12 @@ highchart() %>%
               list(from = 10.5, to = 11.5, color = "#BDFCC9"),
               list(from = 11.5, to = 12.5, color = "#FFFACD"),
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
-              list(from = 13.5, to = 14.5, color = "#BDFCC9")
+              list(from = 13.5, to = 14.5, color = "#BDFCC9"),
+              list(from = 14.5, to = 15.5, color = "#FFFACD")
               ))
 ```
 
-`highcharter` seems to be outdated on CRAN. Directly install from github via
+`highcharter` might be outdated on CRAN. Install from github directly by
 
 ```
 library(devtools)
