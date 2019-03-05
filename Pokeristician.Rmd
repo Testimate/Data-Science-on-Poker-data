@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest Data Update: Mar 1st, 2019"
+date: "Nov 16, 2018, Latest Data Update: Mar 4th, 2019"
 output: html_document
 ---
 
@@ -21,7 +21,7 @@ library(knitr) #kable
 library(highcharter)
 ```
 
-_Dec 5th: Idea: add vertical dash line between the 14th session (Sat) with the 15th session (Thu) to separate my playing mindset as pre-"The Course" era and post-"The Course" era: The Book by Ed Miller_
+_Dec 5th: Idea: separate 1st to 14th session (Sat) with the 15th  (Thu) and the following session pre-"The Course" era and post-"The Course" era: Game change mindset after discover and read The Book by Ed Miller (at Capen Library 3rd floor, midnight)_
 
 _Dec 5th: Implementation: create a separate dataset 'Enlightened' instead_
 
@@ -170,7 +170,8 @@ highchart() %>%
               list(from = 25.5, to = 26.5, color = "#FFFACD"),
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
-              list(from = 28.5, to = 29.5, color = "#FFFACD")
+              list(from = 28.5, to = 29.5, color = "#FFFACD"),
+              list(from = 29.5, to = 30.5, color = "#BDFCC9")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -209,7 +210,8 @@ highchart() %>%
               list(from = 11.5, to = 12.5, color = "#FFFACD"),
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
-              list(from = 14.5, to = 15.5, color = "#FFFACD")
+              list(from = 14.5, to = 15.5, color = "#FFFACD"),
+              list(from = 15.5, to = 16.5, color = "#BDFCC9")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -255,7 +257,8 @@ highchart() %>%
               list(from = 25.5, to = 26.5, color = "#FFFACD"),
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
-              list(from = 28.5, to = 29.5, color = "#FFFACD")
+              list(from = 28.5, to = 29.5, color = "#FFFACD"),
+              list(from = 29.5, to = 30.5, color = "#BDFCC9")
               ))
 ```
 
@@ -295,7 +298,8 @@ highchart() %>%
               list(from = 11.5, to = 12.5, color = "#FFFACD"),
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
-              list(from = 14.5, to = 15.5, color = "#FFFACD")
+              list(from = 14.5, to = 15.5, color = "#FFFACD"),
+              list(from = 15.5, to = 16.5, color = "#BDFCC9")
               ))
 ```
 
@@ -336,7 +340,8 @@ highchart() %>%
               list(from = 25.5, to = 26.5, color = "#FFFACD"),
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
-              list(from = 28.5, to = 29.5, color = "#FFFACD")
+              list(from = 28.5, to = 29.5, color = "#FFFACD"),
+              list(from = 29.5, to = 30.5, color = "#BDFCC9")
               ))
 ```
 
@@ -376,7 +381,8 @@ highchart() %>%
               list(from = 11.5, to = 12.5, color = "#FFFACD"),
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
-              list(from = 14.5, to = 15.5, color = "#FFFACD")
+              list(from = 14.5, to = 15.5, color = "#FFFACD"),
+              list(from = 15.5, to = 16.5, color = "#BDFCC9")
               ))
 ```
 
