@@ -173,7 +173,8 @@ highchart() %>%
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
               list(from = 28.5, to = 29.5, color = "#FFFACD"),
-              list(from = 29.5, to = 30.5, color = "#BDFCC9")
+              list(from = 29.5, to = 30.5, color = "#BDFCC9"),
+              list(from = 30.5, to = 31.5, color = "#BDFCC9")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -213,7 +214,8 @@ highchart() %>%
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
               list(from = 14.5, to = 15.5, color = "#FFFACD"),
-              list(from = 15.5, to = 16.5, color = "#BDFCC9")
+              list(from = 15.5, to = 16.5, color = "#BDFCC9"),
+              list(from = 16.5, to = 17.5, color = "#BDFCC9")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -260,7 +262,8 @@ highchart() %>%
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
               list(from = 28.5, to = 29.5, color = "#FFFACD"),
-              list(from = 29.5, to = 30.5, color = "#BDFCC9")
+              list(from = 29.5, to = 30.5, color = "#BDFCC9"),
+              list(from = 30.5, to = 31.5, color = "#BDFCC9")
               ))
 ```
 
@@ -301,7 +304,8 @@ highchart() %>%
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
               list(from = 14.5, to = 15.5, color = "#FFFACD"),
-              list(from = 15.5, to = 16.5, color = "#BDFCC9")
+              list(from = 15.5, to = 16.5, color = "#BDFCC9"),
+              list(from = 16.5, to = 17.5, color = "#BDFCC9")
               ))
 ```
 
@@ -343,7 +347,8 @@ highchart() %>%
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
               list(from = 28.5, to = 29.5, color = "#FFFACD"),
-              list(from = 29.5, to = 30.5, color = "#BDFCC9")
+              list(from = 29.5, to = 30.5, color = "#BDFCC9"),
+              list(from = 30.5, to = 31.5, color = "#BDFCC9")
               ))
 ```
 
@@ -384,7 +389,8 @@ highchart() %>%
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
               list(from = 14.5, to = 15.5, color = "#FFFACD"),
-              list(from = 15.5, to = 16.5, color = "#BDFCC9")
+              list(from = 15.5, to = 16.5, color = "#BDFCC9"),
+              list(from = 16.5, to = 17.5, color = "#BDFCC9")
               ))
 ```
 
