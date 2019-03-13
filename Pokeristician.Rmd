@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest Data Update: Mar 4th, 2019"
+date: "Nov 16, 2018, Latest Data Update: Mar 11st, 2019"
 output: html_document
 ---
 
@@ -23,7 +23,9 @@ library(highcharter)
 
 _Dec 5th: Idea: separate 1st to 14th session (Sat) with the 15th  (Thu) and the following session pre-"The Course" era and post-"The Course" era: Game change mindset after discover and read The Book by Ed Miller (at Capen Library 3rd floor, midnight)_
 
-_Dec 5th: Implementation: create a separate dataset 'Enlightened' instead_
+_Dec 5th: Implementation: manuever a separate dataset 'Enlightened' - a subset corresponds to the aforementioned definition _
+
+_Idea: Hypothesis: The Book helps significantly._
 
 <br>
 
