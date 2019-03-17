@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest Data Update: Mar 11st, 2019"
+date: "Nov 16, 2018, Latest data set update: Mar 14th, 2019"
 output: html_document
 ---
 
@@ -21,11 +21,14 @@ library(knitr) #kable
 library(highcharter)
 ```
 
-_Dec 5th: Idea: separate 1st to 14th session (Sat) with the 15th  (Thu) and the following session pre-"The Course" era and post-"The Course" era: Game change mindset after discover and read The Book by Ed Miller (at Capen Library 3rd floor, midnight)_
+_Dec 5th: Idea: separate 1st to 14th session (Sat) with the 15th  (Thu) and the following session pre-"enlightment" era and post-"enlightment": (That means the inspiration and mindset I got from after reading the Book 'The Course' by Ed Miller)_
 
-_Dec 5th: Implementation: manuever a separate dataset 'Enlightened' - a subset corresponds to the aforementioned definition _
+_Dec 5th: Implementation: manuever a separate dataset 'Enlightened'_
 
-_Idea: Hypothesis: The Book helps significantly._
+_Hypothesis: The Book helps significantly._
+
+
+_Mar 16th: Idea: Build a ShinyApp that_
 
 <br>
 
@@ -38,7 +41,7 @@ _Idea: Hypothesis: The Book helps significantly._
 
 ```{r First City Settled!}
 #filePath <- file.choose()
-filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"
+filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"  # 
 GoogleSheet <- read_excel(filePath)
 
 Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesStart), sesEnd = ymd_hms(sesEnd),
@@ -147,7 +150,7 @@ EnlightenedEra %>%
 
 series = list(
   list(
-    name = 'Total Profit for each session (promo bonus included), stratified by stake (lemon chiffon: 1$/2$, peppermint: 1$/3$)',
+    name = 'Total Profit for each session, stratified by stake (lemon chiffon: 1$/2$, peppermint: 1$/3$)',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = Testimate %>% select(totalProfit) %>% .[[1]]
   )
@@ -173,8 +176,7 @@ highchart() %>%
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
               list(from = 28.5, to = 29.5, color = "#FFFACD"),
-              list(from = 29.5, to = 30.5, color = "#BDFCC9"),
-              list(from = 30.5, to = 31.5, color = "#BDFCC9")
+              list(from = 29.5, to = 32.5, color = "#BDFCC9")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -189,7 +191,7 @@ highchart() %>%
 ```{r}
 series = list(
   list(
-    name = 'Total Profit for each session (promo bonus included), stratified by stake (lemon chiffon: 1$/2$, peppermint: 1$/3$)',
+    name = 'Total Profit for each session during the Enlightment Era, stratified by stake (lemon chiffon: 1$/2$, peppermint: 1$/3$)',
     color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
     data = EnlightenedEra %>% select(totalProfit) %>% .[[1]]
   )
@@ -214,8 +216,7 @@ highchart() %>%
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
               list(from = 14.5, to = 15.5, color = "#FFFACD"),
-              list(from = 15.5, to = 16.5, color = "#BDFCC9"),
-              list(from = 16.5, to = 17.5, color = "#BDFCC9")
+              list(from = 15.5, to = 18.5, color = "#BDFCC9")
               )) %>%
   hc_yAxis(plotLines = list(
               list(value = 0, width = 5, color = 'black')
@@ -262,8 +263,7 @@ highchart() %>%
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
               list(from = 28.5, to = 29.5, color = "#FFFACD"),
-              list(from = 29.5, to = 30.5, color = "#BDFCC9"),
-              list(from = 30.5, to = 31.5, color = "#BDFCC9")
+              list(from = 29.5, to = 32.5, color = "#BDFCC9")
               ))
 ```
 
@@ -279,7 +279,7 @@ series = list(
     data = EnlightenedEra %>% select(accuProfit) %>% .[[1]]
   ),
   list(
-    name = 'Cumulative Total Profit in Enlightened Era (promo bonus included)',
+    name = 'Cumulative Total Profit during the Enlightened Era (promo bonus included)',
     color = '#FF7D40', 
     data = EnlightenedEra %>% select(accuTotalProfit) %>% .[[1]]
   )
@@ -304,8 +304,7 @@ highchart() %>%
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
               list(from = 14.5, to = 15.5, color = "#FFFACD"),
-              list(from = 15.5, to = 16.5, color = "#BDFCC9"),
-              list(from = 16.5, to = 17.5, color = "#BDFCC9")
+              list(from = 15.5, to = 18.5, color = "#BDFCC9")
               ))
 ```
 
@@ -347,8 +346,7 @@ highchart() %>%
               list(from = 26.5, to = 27.5, color = "#FFFACD"),
               list(from = 27.5, to = 28.5, color = "#BDFCC9"),
               list(from = 28.5, to = 29.5, color = "#FFFACD"),
-              list(from = 29.5, to = 30.5, color = "#BDFCC9"),
-              list(from = 30.5, to = 31.5, color = "#BDFCC9")
+              list(from = 29.5, to = 32.5, color = "#BDFCC9")
               ))
 ```
 
@@ -359,12 +357,12 @@ highchart() %>%
 ```{r}
 series = list(
   list(
-    name = 'Cumulative Profit Per Hour in Enlightened Era',
+    name = 'Cumulative Profit Per Hour during the Enlightened Era',
     color = '#EEAD0E',
     data = EnlightenedEra %>% select(accuProfitPerHr) %>% .[[1]] %>% round(2) 
   ),
   list(
-    name = 'Cumulative Total Profit Per Hour in Enlightened Era (promo bonus included)',
+    name = 'Cumulative Total Profit Per Hour during the Enlightened Era (promo bonus included)',
     color = '#FF7D40',
     data = EnlightenedEra %>% select(accuTotalProfitPerHr) %>% .[[1]] %>% round(2)
   )
@@ -389,8 +387,7 @@ highchart() %>%
               list(from = 12.5, to = 13.5, color = "#FFFACD"),
               list(from = 13.5, to = 14.5, color = "#BDFCC9"),
               list(from = 14.5, to = 15.5, color = "#FFFACD"),
-              list(from = 15.5, to = 16.5, color = "#BDFCC9"),
-              list(from = 16.5, to = 17.5, color = "#BDFCC9")
+              list(from = 15.5, to = 18.5, color = "#BDFCC9")
               ))
 ```
 
