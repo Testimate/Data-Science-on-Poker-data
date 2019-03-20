@@ -21,19 +21,16 @@ library(knitr) #kable
 library(highcharter)
 ```
 
-_Dec 5th: Idea: separate 1st to 14th session (Sat) with the 15th  (Thu) and the following session pre-"enlightment" era and post-"enlightment": (That means the inspiration and mindset I got from after reading the Book 'The Course' by Ed Miller)_
 
-_Dec 5th: Implementation: manuever a separate dataset 'Enlightened'_
-
-_Hypothesis: The Book helps significantly._
-
-
-_Mar 16th: Idea: Build a ShinyApp that_
 
 <br>
 
 
 ## My Statistical Analysis for My Poker Statistics
+
+<br>
+
+__This visualization is interactive in the way that the plots are responsive to the move of the curser, with corresponding information displayed.__
 
 <br>
 
@@ -67,7 +64,7 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 
 ```
 
-Tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
+*Tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
 
 <br>
 
@@ -94,6 +91,10 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
 ```
 
 
+<br>
+
+
+
 #### Profit & total profit by day & by day per hour: Overall 
 ```{r Which day should I play? Total}
 options(tibble.width = Inf)  
@@ -110,6 +111,8 @@ Testimate %>%
     ) %>% kable()
 
 ```
+
+Pending: drop-down table, or straight go for Shiny.
 
 <br>
 
