@@ -1,7 +1,7 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest data set update: May 1st, 2019"
+date: "Nov 16, 2018, Latest data set update: May 7th, 2019"
 output: html_document
 ---
 
@@ -54,12 +54,14 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
                              accuTotalProfit = cumsum(totalProfit),
                              accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 
-# options(tibble.width = Inf)  
-# options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-# Testimate
+#options(tibble.width = Inf)  
+#options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
+#Testimate
 
 # Day of Profit
-# Testimate %>% filter(Day == "Thu") 
+#Testimate %>% filter(Day == "Fri") 
+
+# pending problem: accuProfit is incorrect (still goes with the whole stat) in specific day checking
 
 
 ```
