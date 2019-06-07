@@ -1,8 +1,10 @@
 ---
 title: "What's my Game?"
 author: "Yuqing Xue  <https://github.com/Testimate/Poker>"
-date: "Nov 16, 2018, Latest data set update: May 7th, 2019"
-output: html_document
+date: 'Nov 16, 2018'
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -61,10 +63,29 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 # Day of Profit
 #Testimate %>% filter(Day == "Fri") 
 
+
+
 # pending problem: accuProfit is incorrect (still goes with the whole stat) in specific day checking
 
 
 ```
+
+```{r}
+Testimate %>% 
+  select(Day, Stake, sesStart, sesEnd, sesLength, Profit, profitPerHr) %>% 
+    filter(Day == "Fri") %>%
+      arrange(desc(Profit)) # %>% View()
+```
+
+
+
+```{r}
+Testimate %>% 
+  select(Day, Stake, sesStart,  sesLength, Profit, profitPerHr) %>% 
+    arrange(desc(profitPerHr))  #%>% View()
+```
+
+
 
 *Tibble output options <https://r4ds.had.co.nz/tibbles.html> 10.3.1
 
@@ -89,8 +110,28 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
                                                                    accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 #options(tibble.width = Inf)  
 #options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-#EnlightenedEra
+EnlightenedEra
+
+# command+shift+C
+
 ```
+
+```{r}
+EnlightenedEra %>%
+  select(Day, Stake, sesStart,  sesLength, Profit, profitPerHr) %>%
+    arrange(sesLength) #%>% View() # arrange(desc(sesLength))
+      
+
+```
+
+
+```{r}
+EnlightenedEra %>% 
+  select(Day, Stake, sesStart,  sesLength, Profit, profitPerHr) %>% 
+    arrange(desc(Profit)) #%>% View() # arrange(desc(sesLength))
+      
+```
+
 
 
 <br>
@@ -107,9 +148,9 @@ Testimate %>%
     count = n(),
     sesLengthByDay = round( mean(sesLength),2),
     profitByDay = round(mean(Profit),2),
-    profitPerHrByDay = round(mean(profitPerHr),2),
+    profitPerHrByDay = round(profitByDay/sesLengthByDay,2),
     totalProfitByDay = round(mean(totalProfit),2), # totalProfit including promotion earnings
-    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2)
+    totalProfitPerHrByDay = round(totalProfitByDay/sesLengthByDay,2)
     ) %>% kable()
 
 ```
@@ -128,9 +169,9 @@ EnlightenedEra %>%
     count = n(),
     sesLengthByDay = round( mean(sesLength),2),
     profitByDay = round(mean(Profit),2),
-    profitPerHrByDay = round(mean(profitPerHr),2),
+    profitPerHrByDay = round(profitByDay/sesLengthByDay,2),
     totalProfitByDay = round(mean(totalProfit),2), # totalProfit including promotion earnings
-    totalProfitPerHrByDay = round(mean(totalProfitPerHr),2)
+    totalProfitPerHrByDay = round(totalProfitByDay/sesLengthByDay,2)
     ) %>% kable()
 
 ```
