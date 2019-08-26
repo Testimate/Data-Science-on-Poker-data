@@ -73,7 +73,7 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 ```{r}
 Testimate %>% 
   select(Day, Stake, sesStart, sesEnd, sesLength, Profit, profitPerHr) %>% 
-    filter(Day == "Fri") %>%
+    filter(Day == "Mon") %>%
       arrange(desc(Profit)) # %>% View()
 ```
 
