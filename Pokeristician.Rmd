@@ -110,19 +110,12 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
                                                                    accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 #options(tibble.width = Inf)  
 #options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-EnlightenedEra
+#EnlightenedEra
 
 # command+shift+C
 
 ```
 
-```{r}
-EnlightenedEra %>%
-  select(Day, Stake, sesStart,  sesLength, Profit, profitPerHr) %>%
-    arrange(sesLength) #%>% View() # arrange(desc(sesLength))
-      
-
-```
 
 
 ```{r}
@@ -132,7 +125,14 @@ EnlightenedEra %>%
       
 ```
 
+```{r}
+EnlightenedEra %>%
+  select(Day, Stake, sesStart,  sesLength, Profit, profitPerHr) %>%
+    filter(Stake > 2) %>% 
+      arrange(desc(Profit))
+      
 
+```
 
 <br>
 
@@ -178,7 +178,8 @@ EnlightenedEra %>%
 
 <br>
 
-### 2. Apply `htmlwidget` -> `highcharter`
+## 2. Interactive Visualization
+### Apply `htmlwidget` -> `highcharter`
 <br>
 
 #### Initially inspired by [Philipp Spachtholz](https://www.kaggle.com/philippsp/interactive-dashboards-in-r).
@@ -233,7 +234,58 @@ highchart() %>%
 
 <br>
 
-#### A.2 Session Profit (Enlightened Era)
+
+
+#### A.2 Session Profit (1$3$)
+
+```{r}
+#library(highcharter)
+
+series = list(
+  list(
+    name = 'Total Profit for each 1$3$ session',
+    color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
+    data = Testimate %>% filter(Stake >= 2.5) %>% select(totalProfit)  %>% .[[1]]
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% 
+  hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]] ) %>%
+  hc_yAxis(plotLines = list(
+              list(value = 0, width = 5, color = 'black')
+              ))
+    
+```
+
+<br>
+
+
+#### A.3 Session Profit (1$2$)
+
+```{r}
+#library(highcharter)
+
+series = list(
+  list(
+    name = 'Total Profit for each 1$2$ session',
+    color = '#1E90FF', # <http://cloford.com/resources/colours/500col.htm>
+    data = Testimate %>% filter(Stake < 2.5) %>% select(totalProfit)  %>% .[[1]]
+  )
+)
+
+highchart() %>%
+  hc_add_series_list(series) %>% 
+  hc_xAxis(categories = Testimate %>% select(Day) %>% .[[1]] ) %>%
+  hc_yAxis(plotLines = list(
+              list(value = 0, width = 5, color = 'black')
+              ))
+    
+```
+
+<br>
+
+#### B.1 Session Profit (Enlightened Era)
 
 ```{r}
 series = list(
@@ -315,6 +367,12 @@ highchart() %>%
               list(from = 34.5, to = 35.5, color = "#FFFACD")
               ))
 ```
+
+
+
+
+
+
 
 <br>
 
