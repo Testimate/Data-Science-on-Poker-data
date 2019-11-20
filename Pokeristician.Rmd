@@ -38,7 +38,7 @@ __This visualization is interactive in the way that the plots are responsive to 
 
 ### 1. Data Preparation
 
-```{r First City Settled!}
+```{r  results='hide', warning = FALSE, message=FALSE }
 #filePath <- file.choose()
 filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"  # 
 GoogleSheet <- read_excel(filePath)
@@ -70,7 +70,7 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 
 ```
 
-```{r}
+```{r echo=FALSE}
 Testimate %>% 
   select(Day, Stake, sesStart, sesEnd, sesLength, Profit, profitPerHr) %>% 
     filter(Day == "Mon") %>%
@@ -110,7 +110,7 @@ EnlightenedEra <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(s
                                                                    accuTotalProfitPerHr = accuTotalProfit/accuHour) 
 #options(tibble.width = Inf)  
 #options(tibble.print_max = 15, tibble.print_min = 5) # if more than 15 rows, print 5 rows
-#EnlightenedEra
+EnlightenedEra
 
 # command+shift+C
 
@@ -236,7 +236,7 @@ highchart() %>%
 
 
 
-#### A.2 Session Profit (1$3$)
+#### A.2 Session Profit (1/3)
 
 ```{r}
 #library(highcharter)
@@ -261,7 +261,7 @@ highchart() %>%
 <br>
 
 
-#### A.3 Session Profit (1$2$)
+#### A.3 Session Profit (1/2)
 
 ```{r}
 #library(highcharter)
