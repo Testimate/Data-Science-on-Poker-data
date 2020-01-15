@@ -38,7 +38,7 @@ __This visualization is interactive in the way that the plots are responsive to 
 
 ### 1. Data Preparation
 
-```{r  results='hide', warning = FALSE, message=FALSE }
+```{r  results='hide', warning = FALSE, message = FALSE }
 #filePath <- file.choose()
 filePath <- "/Users/apple/Desktop/YuqingRWork/Poker/DesciplinePokerAtheletes.xlsx"  # 
 GoogleSheet <- read_excel(filePath)
@@ -70,7 +70,8 @@ Testimate <- GoogleSheet %>% mutate(Date = ymd(Date), #sesStart = ymd_hms(sesSta
 
 ```
 
-```{r echo=FALSE}
+#### My performance on Monday:
+```{r echo=FALSE, warning=FALSE}
 Testimate %>% 
   select(Day, Stake, sesStart, sesEnd, sesLength, Profit, profitPerHr) %>% 
     filter(Day == "Mon") %>%
